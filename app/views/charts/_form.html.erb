@@ -1,0 +1,127 @@
+  <%= form_with model: @chart do |f| %>
+  <div class="row">
+    <div class="col">
+
+    <% if @chart != nil %>
+      <% if @chart.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@chart.errors.count, "error") %> prohibited
+            this article from being saved:
+          </h2>
+          <ul>
+              <% @chart.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <% end %>
+   </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-6">
+
+      <div class="card">
+        <h5 class="card-header">Chart</h5>
+        <div class="card-body">
+           <div class="row">
+              <div class="col">
+                  <label>Chart Name</label>
+                  <div>
+                    <%= f.text_field :name %>
+                  </div>
+              </div>
+              <div class="col">
+                <label>Show link to chart in product page</label>
+                <div class="custom-control custom-switch">
+                  <%= f.check_box :is_show_product_page, class: 'custom-control-input', :id => 'customSwitch1' %>
+                  <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                </div>
+              </div>
+           </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h5 class="card-header">Chart</h5>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Row</th>
+                <th scope="col"><%= f.text_field :col_1_caption, class: 'header-cell'  || 'Col1' %></th>
+                <th scope="col"><%= f.text_field :col_2_caption, class: 'header-cell'  || 'Col2' %></th>
+                <th scope="col"><%= f.text_field :col_3_caption, class: 'header-cell'  || 'Col3' %></th>
+              </tr>
+            </thead>
+            <%= f.fields_for :chart_details do |detail| %>
+                <tr>
+                    <td><%= detail.text_field :row_name %></td>
+                    <td><%= detail.text_field :col1 %></td>
+                    <td><%= detail.text_field :col2 %></td>
+                    <td><%= detail.text_field :col3 %></td>
+                </tr>
+            <% end %>
+
+          </table>
+          <div class="card-footer">
+                <%= link_to "Add", '#ManuplateDetails', 'data-toggle' => 'modal' %>
+                <%= link_to "Add", :controller => :charts, :action => :add_chart_detail %>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="col">
+          HIII
+    </div>
+
+
+  </div>
+  <div class="row">
+        <%= f.submit "Save", class: 'btn btn-primary' %>
+        <%= link_to 'Back', charts_path, class:'btn btn-primary' %>
+  </div>
+
+    <div class="modal fade" id="ManuplateDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog edit_scr_modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Edit your Comment</h4>
+          </div>
+          <%= f.fields_for :chart_details do |chart_detail| %>
+
+            <div class="modal-body">
+              <div>
+                <label>Col1</label><br>
+                <%= chart_detail.text_field :row_name %>
+              </div>
+              <div>
+                <label>Col1</label><br>
+                <%= chart_detail.text_field :col1 %>
+              </div>
+              <div>
+                <label>Col1</label><br>
+                <%= chart_detail.text_field :col2 %>
+              </div>
+              <div>
+                <label>Col1</label><br>
+                <%= chart_detail.text_field :col3 %>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+                <%= f.submit "Save", class: 'btn btn-primary' %>
+            </div>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>

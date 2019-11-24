@@ -1,0 +1,40 @@
+  <div class="row">
+
+    <div class="col">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Build your first Chart !</h5>
+          <p class="card-text">Follow the guidelines,, Follow the guidelines,, Follow the guidelines ,, Follow the guidelines</p>
+          <a href="#" class="btn btn-primary">Get Started !</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col">
+      <div class="card charts-list">
+        <div class="card-header">
+          Charts
+        </div>
+        <div class="card-body">
+          <% if @charts.count == 0 %>
+            <p class="card-text">
+            <h5 class="card-title">You have not created any charts yet !</h5><br>
+            Click on <b>Get Started</b> .. to get started. You can choose which products use each other </p>
+          <% else %>
+            <% @charts.each do |chart| %>
+              <div class="row">
+                <div class="col-8 card-record-title"> <%= chart.name %> </div>
+                <div class="col card-record-actions">
+                  <%= link_to 'Edit', edit_chart_path(chart) %>
+                  <%= link_to "Delete", charts_path(chart), method: "delete", data: { confirm: "Are you sure?", disable_with: "Processing..." } %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
