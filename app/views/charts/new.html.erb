@@ -1,3 +1,5 @@
-<%= render 'form' %>
+            <% flash.each do |key, value| %>
+                <div class="alert alert-<%= key %>"><%= value %></div>
+            <% end %>
 
-<%= link_to 'Back', charts_path %>
+<%= render 'form' %>

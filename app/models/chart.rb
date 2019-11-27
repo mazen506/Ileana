@@ -6,4 +6,7 @@ class Chart < ApplicationRecord
       has_many :chart_products, dependent: :destroy
       accepts_nested_attributes_for :chart_details, allow_destroy: true
       accepts_nested_attributes_for :chart_products, allow_destroy: true
+
+      validates_associated :chart_details
+      validates_associated :chart_products
 end

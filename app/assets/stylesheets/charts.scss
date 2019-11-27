@@ -7,10 +7,16 @@
 }
 
 
-.header-cell{
+.form-control.header-cell {
   border:0px;
-  background-color: #eeeeee;
+  background-color: #fff;
+  text-decoration: underline;
+  font-weight: bold;
+  border-bottom-width: 1px;
+  padding-top:15px;
 }
+
+
 
 .card-footer {
   background-color:#fff !important;
@@ -18,8 +24,14 @@
 
 .product-list {
   height:500px;
-  overflow:scroll;
+  overflow:hidden;
 }
+
+.product-list .card-body {
+  /* overflow: hidden; */
+  overflow-y: auto;
+}
+
 
 .product-list img {
     width:60px;
@@ -30,9 +42,47 @@ product-list-item label {
   padding-top:5px;
 }
 
+.product-list .card-header h5, h6 {
+  display: inline-block;
+}
+
+.list-icons {
+    width:15px;
+    height:15px;
+    margin-right:15px;
+}
+
 .product-list-item {
     border-bottom: 1px solid #DADADA;
-    padding-bottom:10px;
+    padding-bottom:3px;
+    padding-top:10px;
+}
+
+.alert-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+label.custom-control-label img {
+  margin-right: 30px;
+  margin-left: 30px;
+  /* padding-right: 30px; */
+}
+
+.chart-list .card-body {
+  /* overflow: hidden; */
+  overflow-y: auto;
+}
+
+.chart-list-item {
+  border-bottom: 1px solid #DADADA;
+  padding-bottom:3px;
+  padding-top:10px;
+}
+
+.cahrt-list ,card-record-title a {
+  color:#000;
 }
 
 .btn {

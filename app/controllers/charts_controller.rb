@@ -2,7 +2,7 @@ class ChartsController < AuthenticatedController
 
   def index
     @charts = Chart.all
-    @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
+    # @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
   end
 
 
@@ -23,36 +23,52 @@ class ChartsController < AuthenticatedController
     redirect_to '/charts/index',:notice => "Your chart has been deleted !"
   end
 
+
   def new
-    @products = ShopifyAPI::Product.find(:all)
-    @product_ids = Array.new # empty array
+    # @products = ShopifyAPI::Product.find(:all)
+    # @product_ids = Array.new # empty array
     @chart = Chart.new
-    @chart.chart_details.new
+    # @chart.chart_details.new
   end
 
   def create
-    @chart = Chart.new(chart_params)
-    @shop = Shop.find_by(:shopify_domain => ShopifyAPI::Shop.current.domain)
-    @chart_products = Array.new
-    @product_ids = params[:chart_product]
-    @chart.shop_id = @shop.id
-    @chart.description = ""
-    ActiveRecord::Base.transaction do
-    if @chart.save
-      #Add New Product
-      @product_ids.each do |product_id|
-        @chart_products.push({:chart_id => @chart.id, :product_id => product_id})
-      end
-      ChartProduct.create(@chart_products)
     
-      flash[:success] = "Added Successfully !!"
-      redirect_to '/charts/index'
-    else
-      @errors =@chart.errors.full_messages.join(",")
-      flash[:error] = "Failed with Error : #{@errors}"
-      redirect_to '/charts/new'
-    end
-   end
+    # @chart = Chart.new(chart_params)
+    # @shop = Shop.find_by(:shopify_domain => ShopifyAPI::Shop.current.domain)
+    # @chart_products = Array.new
+    # @product_ids = params[:chart_product]
+    # @chart.shop_id = @shop.id
+    # @chart.description = ""
+    # ActiveRecord::Base.transaction do
+    # if @chart.save
+    #   #Add New Product
+    #   @product_ids.each do |product_id|
+    #     @chart_products.push({:chart_id => @chart.id, :product_id => product_id})
+    #   end
+    #   ChartProduct.create(@chart_products)
+    
+    #   flash[:success] = "Added Successfully !!"
+    #   redirect_to '/charts/index'
+    # else
+    #         # @errors =@chart.errors.full_messages.join("\n")
+    #         # flash.now[:error] = "What's wrong!!"
+    #         # # redirect_to '/charts/new'
+    #         # render action: "new"
+    #         # puts "What's wrong!!"
+    #         respond_to do |format|
+    #           flash.now[:error] = "What's wrong!!"
+    #           format.html 
+    #         end
+    # end
+    @chart = Chart.new(chart_params)
+    if @chart.save
+        flash[:success] = "Added Successfully !!"
+        redirect_to '/charts/index'
+     else
+          flash.now[:notice] = "What's wrong!!"
+          render :new 
+          puts "what's wrong !!"
+     end
 
   end
 
@@ -105,13 +121,15 @@ class ChartsController < AuthenticatedController
 
     if @chart.update(chart_params)
         flash[:success] = "Updated Successfully !!"
-        respond_to do |format|
-          # format.js {render inline: "location.reload();" }
-          redirect_to @chart
-        end
-        # redirect_back(fallback_location: root_path)
+        redirect_to chart_path(@chart)
+        # respond_to do |format|
+        #    format.js {render inline: "location.reload();" }
+        #   #redirect_back(fallback_location: root_path)
+        #   #
+        # end
+         
     else
-        render 'index'
+        render 'edit'
     end
     end
   end

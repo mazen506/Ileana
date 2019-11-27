@@ -25,12 +25,12 @@
             Click on <b>Get Started</b> .. to get started. You can choose which products use each other </p>
           <% else %>
             <% @charts.each do |chart| %>
-              <div class="row">
-                <div class="col-8 card-record-title"> <%= chart.name %> </div>
+              <div class="chart-list-item row">
+                <div class="col-8 card-record-title"> <%= link_to chart.name, chart_path(chart) %> </div>
                 <div class="col card-record-actions">
-                  <%= link_to 'Show', chart_path(chart) %>
-                  <%= link_to 'Edit', edit_chart_path(chart) %>
-                  <%= link_to "Delete", charts_path(chart), method: "delete", data: { confirm: "Are you sure?", disable_with: "Processing..." } %>
+                  
+                  <%= link_to image_tag("icon_edit.png", :border=>0, :class => 'list-icons'), edit_chart_path(chart) %>
+                  <%= link_to image_tag("icon_delete.png", :border=>0, :class => 'list-icons'), chart_path(chart), method: "delete", data: { confirm: "Are you sure?", disable_with: "Processing..." } %>
                 </div>
               </div>
             <% end %>
@@ -38,18 +38,6 @@
         </div>
       </div>
 
-      <div class="card">
-        <h5 class="card-header">Products</h5>
-        <div class="card-body">
-          <h2>Products</h2>
-
-          <ul>
-            <% @products.each do |product| %>
-              <li><%= link_to product.title, "https://#{@shop_session.domain}/admin/products/#{product.id}", target: "_top" %></li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
 
     </div>
 

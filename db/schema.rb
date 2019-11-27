@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_000602) do
+ActiveRecord::Schema.define(version: 2019_11_27_012139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,9 +37,9 @@ ActiveRecord::Schema.define(version: 2019_11_25_000602) do
     t.integer "shop_id", null: false
     t.string "name", null: false
     t.string "description", null: false
-    t.string "col_1_caption", null: false
-    t.string "col_2_caption", null: false
-    t.string "col_3_caption", null: false
+    t.string "col_1_caption", default: "Col1", null: false
+    t.string "col_2_caption", default: "Col2", null: false
+    t.string "col_3_caption", default: "Col3", null: false
     t.boolean "is_show_product_page", default: false, null: false
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false

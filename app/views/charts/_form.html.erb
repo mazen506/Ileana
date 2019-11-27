@@ -2,29 +2,12 @@
   <div class="row">
     <div class="col">
 
-    <% if @chart != nil %>
-      <% if @chart.errors.any? %>
-        <div id="error_explanation">
-          <h2>
-            <%= pluralize(@chart.errors.count, "error") %> prohibited
-            this article from being saved:
-          </h2>
-          <ul>
-              <% @chart.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-          </ul>
-        </div>
-      <% end %>
-    <% end %>
-   </div>
-  </div>
+   
 
   <div class="row">
 
 
     <div class="col-6">
-
       <div class="card">
         <h5 class="card-header">Chart</h5>
         <div class="card-body">
@@ -38,90 +21,17 @@
               <div class="col">
                 <label>Show link to chart in product page</label>
                 <div class="custom-control custom-switch">
-                  <%= f.check_box :is_show_product_page, class: 'custom-control-input', :id => 'customSwitch1' %>
-                  <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                    <%= f.check_box :is_show_product_page, class: 'custom-control-input', :id => 'customSwitch1' %>
+                    <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
                 </div>
               </div>
            </div>
         </div>
       </div>
 
-      <div class="card">
-        <h5 class="card-header">Chart</h5>
-        <div class="card-body">
-          <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Row</th>
-                <th scope="col"><%= f.text_field :col_1_caption, class: 'header-cell form-control'  || 'Col1' %></th>
-                <th scope="col"><%= f.text_field :col_2_caption, class: 'header-cell form-control'  || 'Col2' %></th>
-                <th scope="col"><%= f.text_field :col_3_caption, class: 'header-cell form-control'  || 'Col3' %></th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody class="chart_details">
-                <%= f.fields_for :chart_details do |builder| %>
-                    <%= render 'chart_detail_fields', :f => builder %>
-                <% end %>
-            </tbody>
-
-         </table>
-          </div>
-          <div class="card-footer links">
-                <%= link_to_add_association 'Add Record', f, :chart_details, class: 'btn btn-primary', data: {association_insertion_node: '.chart_details', association_insertion_method: :append} %>
-          </div>
-        </div>
-      </div>
-
     </div>
 
-    <div class="col-6">
-
-      <div class="card product-list">
-        <div class="card-header">
-          <div class="form-group row">
-              <label class="col-10">Products</label>
-              <div class="header-links">
-                  <%= link_to "Selected", url_for(:filter => 'selected') %> |
-                  <%= link_to "All", url_for(:filter => 'all') %>
-              </div>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <% if (params[:filter] == 'all' || params[:filter] == nil ) %>
-            <% @products.each do |product| %>
-              <div class="form-group row product-list-item">
-                <div class="col-3">
-                    <%= check_box_tag "chart_product[]", product.id, @product_ids.include?(product.id.to_s), id: dom_id(product), class: 'mb-2' %>
-                </div>
-                <div class="col-3">
-                    <img src="<%= product.image.src %>" class="mb-2">
-                </div>
-                <div class="col-6">
-                    <%= label_tag dom_id(product), product.title %>
-                </div>
-              </div>
-            <% end %>
-          <% else %>
-            <% @selected_products.each do |product| %>
-              <div class="form-group row product-list-item">
-                <div class="col-1">
-                  <%= check_box_tag "chart_product[]", product.id, @product_ids.include?(product.id.to_s), id: dom_id(product)%>
-                </div>
-                <div class="col-2">
-                  <img src="<%= product.image.src %>">
-                </div>
-                <div class="col-8">
-                  <%= label_tag dom_id(product), product.title %>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-      </div>
-    </div>
-
+ 
 
   </div>
   </div>
