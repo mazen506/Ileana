@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_22_065438) do
+ActiveRecord::Schema.define(version: 2019_11_25_000602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2019_11_22_065438) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "chart_id"
+    t.index ["chart_id"], name: "index_chart_details_on_charts_id"
   end
 
   create_table "chart_products", force: :cascade do |t|
@@ -39,8 +40,13 @@ ActiveRecord::Schema.define(version: 2019_11_22_065438) do
     t.string "col_1_caption", null: false
     t.string "col_2_caption", null: false
     t.string "col_3_caption", null: false
-    t.boolean "is_show_product_page", null: false
-    t.boolean "is_deleted", null: false
+    t.boolean "is_show_product_page", default: false, null: false
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products", id: :string, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -54,5 +60,4 @@ ActiveRecord::Schema.define(version: 2019_11_22_065438) do
   end
 
   add_foreign_key "chart_details", "charts"
-  add_foreign_key "charts", "shops", column: "shops_id"
 end

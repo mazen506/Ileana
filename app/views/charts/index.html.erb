@@ -17,6 +17,7 @@
         <div class="card-header">
           Charts
         </div>
+
         <div class="card-body">
           <% if @charts.count == 0 %>
             <p class="card-text">
@@ -27,6 +28,7 @@
               <div class="row">
                 <div class="col-8 card-record-title"> <%= chart.name %> </div>
                 <div class="col card-record-actions">
+                  <%= link_to 'Show', chart_path(chart) %>
                   <%= link_to 'Edit', edit_chart_path(chart) %>
                   <%= link_to "Delete", charts_path(chart), method: "delete", data: { confirm: "Are you sure?", disable_with: "Processing..." } %>
                 </div>
@@ -35,6 +37,20 @@
           <% end %>
         </div>
       </div>
+
+      <div class="card">
+        <h5 class="card-header">Products</h5>
+        <div class="card-body">
+          <h2>Products</h2>
+
+          <ul>
+            <% @products.each do |product| %>
+              <li><%= link_to product.title, "https://#{@shop_session.domain}/admin/products/#{product.id}", target: "_top" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
     </div>
 
   </div>

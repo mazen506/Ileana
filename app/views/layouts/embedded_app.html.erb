@@ -11,13 +11,32 @@
       <%= javascript_include_tag 'application', "data-turbolinks-track" => true %>
     <% end %>
     <%= csrf_meta_tags %>
+
+    <script>
+        jQuery(function($) {
+            $(".ajax")
+                .bind("ajax:loading", console.log('loading'))
+                .bind("ajax:complete", console.log('complete'))
+                .bind("ajax:success", function(event, data, status, xhr) {
+                    alert('Success !!')
+                })
+                .bind("ajax:failure", function(xhr, status, error) {
+                    console.log(error);
+                });
+        });
+    </script>
   </head>
 
   <body>
     <div class="app-wrapper">
       <div class="app-content">
         <main role="main">
+          <%= render 'layouts/header' %>
+          <% flash.each do |key, value| %>
+            <div class="alert alert-<%= key %>"><%= value %></div>
+          <% end %>
           <%= yield %>
+          <%= render 'layouts/footer' %>
         </main>
       </div>
     </div>

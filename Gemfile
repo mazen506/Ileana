@@ -8,6 +8,7 @@ gem "bootstrap"
 gem 'jquery-rails'
 gem 'sprockets-rails'
 gem "jquery-ui-rails"
+gem "cocoon"
 
 gem 'best_in_place'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

@@ -1,4 +1,4 @@
-  <%= form_with model: @chart do |f| %>
+  <%= form_with model: @chart, :remote => true do  |f| %>
   <div class="row">
     <div class="col">
 
@@ -22,6 +22,7 @@
 
   <div class="row">
 
+
     <div class="col-6">
 
       <div class="card">
@@ -31,7 +32,7 @@
               <div class="col">
                   <label>Chart Name</label>
                   <div>
-                    <%= f.text_field :name %>
+                    <%= f.text_field :name, class: 'form-control' %>
                   </div>
               </div>
               <div class="col">
@@ -48,80 +49,91 @@
       <div class="card">
         <h5 class="card-header">Chart</h5>
         <div class="card-body">
+          <div class="table-responsive">
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">Row</th>
-                <th scope="col"><%= f.text_field :col_1_caption, class: 'header-cell'  || 'Col1' %></th>
-                <th scope="col"><%= f.text_field :col_2_caption, class: 'header-cell'  || 'Col2' %></th>
-                <th scope="col"><%= f.text_field :col_3_caption, class: 'header-cell'  || 'Col3' %></th>
+                <th scope="col"><%= f.text_field :col_1_caption, class: 'header-cell form-control'  || 'Col1' %></th>
+                <th scope="col"><%= f.text_field :col_2_caption, class: 'header-cell form-control'  || 'Col2' %></th>
+                <th scope="col"><%= f.text_field :col_3_caption, class: 'header-cell form-control'  || 'Col3' %></th>
+                <th scope="col"></th>
               </tr>
             </thead>
-            <%= f.fields_for :chart_details do |detail| %>
-                <tr>
-                    <td><%= detail.text_field :row_name %></td>
-                    <td><%= detail.text_field :col1 %></td>
-                    <td><%= detail.text_field :col2 %></td>
-                    <td><%= detail.text_field :col3 %></td>
-                </tr>
+            <tbody class="chart_details">
+                <%= f.fields_for :chart_details do |builder| %>
+                    <%= render 'chart_detail_fields', :f => builder %>
+                <% end %>
+            </tbody>
+
+         </table>
+          </div>
+          <div class="card-footer links">
+                <%= link_to_add_association 'Add Record', f, :chart_details, class: 'btn btn-primary', data: {association_insertion_node: '.chart_details', association_insertion_method: :append} %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-6">
+
+      <div class="card product-list">
+        <div class="card-header">
+          <div class="form-group row">
+              <label class="col-10">Products</label>
+              <div class="header-links">
+                  <%= link_to "Selected", url_for(:filter => 'selected') %> |
+                  <%= link_to "All", url_for(:filter => 'all') %>
+              </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <% if (params[:filter] == 'all' || params[:filter] == nil ) %>
+            <% @products.each do |product| %>
+              <div class="form-group row product-list-item">
+                <div class="col-3">
+                    <%= check_box_tag "chart_product[]", product.id, @product_ids.include?(product.id.to_s), id: dom_id(product), class: 'mb-2' %>
+                </div>
+                <div class="col-3">
+                    <img src="<%= product.image.src %>" class="mb-2">
+                </div>
+                <div class="col-6">
+                    <%= label_tag dom_id(product), product.title %>
+                </div>
+              </div>
             <% end %>
-
-          </table>
-          <div class="card-footer">
-                <%= link_to "Add", '#ManuplateDetails', 'data-toggle' => 'modal' %>
-                <%= link_to "Add", :controller => :charts, :action => :add_chart_detail %>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-
-    <div class="col">
-          HIII
-    </div>
-
-
-  </div>
-  <div class="row">
-        <%= f.submit "Save", class: 'btn btn-primary' %>
-        <%= link_to 'Back', charts_path, class:'btn btn-primary' %>
-  </div>
-
-    <div class="modal fade" id="ManuplateDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog edit_scr_modal">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel">Edit your Comment</h4>
-          </div>
-          <%= f.fields_for :chart_details do |chart_detail| %>
-
-            <div class="modal-body">
-              <div>
-                <label>Col1</label><br>
-                <%= chart_detail.text_field :row_name %>
+          <% else %>
+            <% @selected_products.each do |product| %>
+              <div class="form-group row product-list-item">
+                <div class="col-1">
+                  <%= check_box_tag "chart_product[]", product.id, @product_ids.include?(product.id.to_s), id: dom_id(product)%>
+                </div>
+                <div class="col-2">
+                  <img src="<%= product.image.src %>">
+                </div>
+                <div class="col-8">
+                  <%= label_tag dom_id(product), product.title %>
+                </div>
               </div>
-              <div>
-                <label>Col1</label><br>
-                <%= chart_detail.text_field :col1 %>
-              </div>
-              <div>
-                <label>Col1</label><br>
-                <%= chart_detail.text_field :col2 %>
-              </div>
-              <div>
-                <label>Col1</label><br>
-                <%= chart_detail.text_field :col3 %>
-              </div>
-            </div>
-
-            <div class="modal-footer">
-                <%= f.submit "Save", class: 'btn btn-primary' %>
-            </div>
-
+            <% end %>
           <% end %>
-        </div>
       </div>
     </div>
+
+
+  </div>
+  </div>
+
+
+    <div class="row float-right">
+      <div class="form-group">
+        <%= f.submit "Save", class: 'btn btn-primary ajax' %>
+        <%= link_to 'Back', charts_path, class:'btn btn-primary' %>
+      </div>
+    </div>
+
+
+
   <% end %>

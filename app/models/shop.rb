@@ -1,5 +1,5 @@
 class Shop < ActiveRecord::Base
-  include ShopifyApp::SessionStorage
+    include ShopifyApp::SessionStorage
 
   def with_shopify!
     session = ShopifyAPI::Session.new(shopify_domain, shopify_token)
