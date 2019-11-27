@@ -1,8 +1,23 @@
-  <%= form_with model: @chart, :remote => true do  |f| %>
+  <%= form_with model: @chart, :local => true do  |f| %>
   <div class="row">
     <div class="col">
 
-   
+    <% if @chart != nil %>
+      <% if @chart.errors.any? %>
+        <div class="alert alert-error">
+          <h6>
+            Please resolve the following errors:
+          </h6>
+          <ul>
+              <% @chart.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <% end %>
+   </div>
+  </div>
 
   <div class="row">
 
@@ -29,15 +44,83 @@
         </div>
       </div>
 
+      <div class="card">
+        <h5 class="card-header">Chart</h5>
+        <div class="card-body">
+          <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Row</th>
+                <th scope="col"><%= f.text_field :col_1_caption,  class: 'header-cell form-control'  || 'Col1' %></th>
+                <th scope="col"><%= f.text_field :col_2_caption,  class: 'header-cell form-control'  || 'Col2' %></th>
+                <th scope="col"><%= f.text_field :col_3_caption,  class: 'header-cell form-control'  || 'Col3' %></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody class="chart_details">
+                <%= f.fields_for :chart_details do |builder| %>
+                    <%= render 'chart_detail_fields', :f => builder %>
+                <% end %>
+            </tbody>
+
+         </table>
+          </div>
+          <div class="card-footer links">
+                <%= link_to_add_association 'Add Record', f, :chart_details, class: 'btn btn-primary', data: {association_insertion_node: '.chart_details', association_insertion_method: :append} %>
+          </div>
+        </div>
+      </div>
+
     </div>
 
- 
+    <div class="col-6">
+      <div class="card product-list">
+        <div class="card-header">
+              <h5>Products</h5>
+              <h6 class="header-links">
+              [
+                  <%= link_to "All", url_for(:filter => 'all') %> |
+                  <%= link_to "Selected", url_for(:filter => 'selected') %> 
+              ]                  
+              </h6>
+          </div>
+
+        <div class="card-body">
+          <% if (params[:filter] == 'all' || params[:filter] == nil ) %>
+            <% if (@products != nil) %>
+            <% @products.each do |product| %>
+              <div class="custom-control custom-checkbox product-list-item">
+                    <%= check_box_tag "chart_product[]", product.id, @product_ids.include?(product.id.to_s), id: dom_id(product), class: "custom-control-input" %>
+                    <label class="custom-control-label" for=<%= dom_id(product) %>>
+                            <img src="<%= product.image.src %>">
+                            <%= product.title %>
+                    </label>
+              </div>
+            <% end %>
+           <% end %>
+          <% else %>
+          <% if (@selected_products != nil) %>
+            <% @selected_products.each do |product| %>
+              <div class="custom-control custom-checkbox product-list-item">
+                    <%= check_box_tag "chart_product[]", product.id, @product_ids.include?(product.id.to_s), id: dom_id(product), class: "custom-control-input" %>
+                    <label class="custom-control-label" for=<%= dom_id(product) %>>
+                            <img src="<%= product.image.src %>">
+                            <%= product.title %>
+                    </label>
+              </div>
+            <% end %>
+          <% end %>
+       <% end %>
+      </div>
+    </div>
+
 
   </div>
   </div>
 
 
-    <div class="row float-right">
+    <div class="row float-right btns-row">
       <div class="form-group">
         <%= f.submit "Save", class: 'btn btn-primary ajax' %>
         <%= link_to 'Back', charts_path, class:'btn btn-primary' %>

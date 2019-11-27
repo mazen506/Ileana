@@ -2,20 +2,20 @@ class ChartsController < AuthenticatedController
 
   def index
     @charts = Chart.all
-    # @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
+    @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
   end
 
 
-  # def show
-  #   @id = params[:id]
-  #   @chart = Chart.find_by(:id => @id)
-  #   @chart_details = ChartDetail.where(:chart_id => @id)
-  #   @products = ShopifyAPI::Product.find(:all)
-  #   @product_ids = ChartProduct.where(chart_id: @id).select(:product_id).map{|p| p.product_id}
-  #   #@selected_products = ShopifyAPI::Product.find(4290402943029)
-  #   # @selected_products = ShopifyAPI::Product.find(:all, :params => { :id => [4290402943029]})
-  #   @selected_products = @products.select{ |p| @product_ids.include?(p.id.to_s) }
-  # end
+  def show
+    @id = params[:id]
+    @chart = Chart.find_by(:id => @id)
+    @chart_details = ChartDetail.where(:chart_id => @id)
+    @products = ShopifyAPI::Product.find(:all)
+    @product_ids = ChartProduct.where(chart_id: @id).select(:product_id).map{|p| p.product_id}
+    #@selected_products = ShopifyAPI::Product.find(4290402943029)
+    # @selected_products = ShopifyAPI::Product.find(:all, :params => { :id => [4290402943029]})
+    @selected_products = @products.select{ |p| @product_ids.include?(p.id.to_s) }
+  end
 
   def destroy
     @id = params[:id]
@@ -24,51 +24,41 @@ class ChartsController < AuthenticatedController
   end
 
 
+
   def new
-    # @products = ShopifyAPI::Product.find(:all)
-    # @product_ids = Array.new # empty array
+    @products = ShopifyAPI::Product.find(:all)
+    @product_ids = Array.new # empty array
     @chart = Chart.new
-    # @chart.chart_details.new
+    @chart.chart_details.new
   end
 
   def create
     
-    # @chart = Chart.new(chart_params)
-    # @shop = Shop.find_by(:shopify_domain => ShopifyAPI::Shop.current.domain)
-    # @chart_products = Array.new
-    # @product_ids = params[:chart_product]
-    # @chart.shop_id = @shop.id
-    # @chart.description = ""
-    # ActiveRecord::Base.transaction do
-    # if @chart.save
-    #   #Add New Product
-    #   @product_ids.each do |product_id|
-    #     @chart_products.push({:chart_id => @chart.id, :product_id => product_id})
-    #   end
-    #   ChartProduct.create(@chart_products)
-    
-    #   flash[:success] = "Added Successfully !!"
-    #   redirect_to '/charts/index'
-    # else
-    #         # @errors =@chart.errors.full_messages.join("\n")
-    #         # flash.now[:error] = "What's wrong!!"
-    #         # # redirect_to '/charts/new'
-    #         # render action: "new"
-    #         # puts "What's wrong!!"
-    #         respond_to do |format|
-    #           flash.now[:error] = "What's wrong!!"
-    #           format.html 
-    #         end
-    # end
     @chart = Chart.new(chart_params)
+    @shop = Shop.find_by(:shopify_domain => ShopifyAPI::Shop.current.domain)
+    @chart_products = Array.new
+    @product_ids = params[:chart_product]
+    @chart.shop_id = @shop.id
+    @chart.description = ""
+    ActiveRecord::Base.transaction do
     if @chart.save
-        flash[:success] = "Added Successfully !!"
-        redirect_to '/charts/index'
-     else
-          flash.now[:notice] = "What's wrong!!"
-          render :new 
-          puts "what's wrong !!"
-     end
+      #Add New Product
+      @product_ids.each do |product_id|
+        @chart_products.push({:chart_id => @chart.id, :product_id => product_id})
+      end
+      ChartProduct.create(@chart_products)
+    
+      flash[:success] = "Added Successfully !!"
+      redirect_to '/charts/index'
+    else
+            # Reinitialize variables
+            @product_ids = Array.new # empty array
+            @products = ShopifyAPI::Product.find(:all)
+            # Render the new page 
+            render action: "new"
+    end
+   
+  end
 
   end
 

@@ -52,6 +52,20 @@ product-list-item label {
     margin-right:15px;
 }
 
+.app-wrapper {
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.btns-row {
+  padding: 15px;
+}
+
+.product-list-item .product-view {
+      padding-top: 15px;
+}
+
 .product-list-item {
     border-bottom: 1px solid #DADADA;
     padding-bottom:3px;
@@ -62,6 +76,10 @@ product-list-item label {
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
+}
+
+.product-list-item .custom-control-label::after, .product-list-item .custom-control-label::before {
+  margin-top: 15px;
 }
 
 label.custom-control-label img {

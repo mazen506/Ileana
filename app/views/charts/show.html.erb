@@ -59,11 +59,9 @@
     <div class="col-6">
 
       <div class="card product-list">
-        <div class="card-header">
-          <div class="form-group row">
-              <label class="col-10">Products</label>
-          </div>
-        </div>
+        <h5 class="card-header">
+              Products
+        </h5>
 
         <div class="card-body">
           <% if (@chart_products != nil) %>
@@ -79,14 +77,14 @@
             <% end %>
           <% end %>
         </div>
-        
+
     </div>
 
   </div>
   </div>
 
 
-    <div class="row float-right">
+    <div class="row float-right btns-row">
       <div class="form-group">
         <%= link_to 'Edit', edit_chart_path(@chart), class:'btn btn-primary' %>
         <%= link_to 'Back', charts_path, class:'btn btn-primary' %>
