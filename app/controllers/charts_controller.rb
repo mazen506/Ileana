@@ -49,7 +49,7 @@ class ChartsController < AuthenticatedController
       ChartProduct.create(@chart_products)
     
       flash[:success] = "Added Successfully !!"
-      redirect_to '/charts/index'
+      redirect_to @chart
     else
             # Reinitialize variables
             @product_ids = Array.new # empty array
