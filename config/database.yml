@@ -8,6 +8,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  port: 5432
   timeout: 5000
 development:
   <<: *default
@@ -15,7 +16,6 @@ development:
   username: admin
   password: admin
   host: localhost
-  port: 5432
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
@@ -25,6 +25,8 @@ test:
   username: admin
   password: admin
   host: localhost
-  port: 5432
 production:
+  database: d5qdd94hds2d73
+  username: linxudoqmgofjj
+  password: 6e9054f3c6761caa653727526603b1efc8558e52d724fdfd744be28efba10702
   <<: *default
