@@ -114,6 +114,27 @@ label.custom-control-label img {
 .header-links {
   float:right
 }
+.header-links img {
+  width:30px;
+  height:30px;
+  margin-right:15px;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
 
 @media
 only screen and (max-width: 760px),

@@ -11,7 +11,7 @@ if (!document.documentElement.hasAttribute("data-turbolinks-preview")) {
     if (flashData.error) {
       ShopifyApp.flashError(flashData.error);
     }
-
     document.removeEventListener(eventName, flash)
   });
+  
 }

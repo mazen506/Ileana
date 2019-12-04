@@ -9,13 +9,37 @@
             "name": "Rails server",
             "type": "Ruby",
             "request": "launch",
-            "cwd": "${workspaceRoot}",
             "program": "${workspaceRoot}/bin/rails",
-            "showDebuggerOutput": true,
             "args": [
                 "server"
-            ],
-            "pathToRDebugIDE": "C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/ruby-debug-ide-0.7.0/bin/rdebug-ide"
-          }
+            ]
+        },
+        {
+            "name": "Listen for rdebug-ide",
+            "type": "Ruby",
+            "request": "attach",
+            "cwd": "${workspaceRoot}",
+            "remoteHost": "127.0.0.1",
+            "remotePort": "1234",
+            "remoteWorkspaceRoot": "${workspaceRoot}"
+        },
+        {
+            "name": "Debug Rails server",
+            "type": "Ruby",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "useBundler": true,
+            "pathToBundler": "/c/Ruby25-x64/bin/bundle",
+            "pathToRDebugIDE": "/c/Ruby25-x64/lib/ruby/gems/2.5.0/gems/ruby-debug-ide-0.7.0/bin/rdebug-ide",
+            "program": "${workspaceRoot}/bin/rails",
+            "env": {
+                "PATH": "/c/Users/User/bin:/mingw64/bin:/usr/local/bin:/usr/bin:/bin:/mingw64/bin:/usr/bin:/c/Users/User/bin:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/c/Windows/System32/OpenSSH:/c/Program Files/php:/c/Program Files/MySQL/MySQL Utilities 1.6:/cmd:/c/Program Files/nodejs:/c/Program Files (x86)/Yarn/bin:/c/Program Files (x86)/GnuPG/bin:/c/cygwin64/bin:/c/Ruby25-x64/bin:/c/Users/User/AppData/Local/Microsoft/WindowsApps:/c/Program Files/heroku/bin:/c/Users/User/AppData/Roaming/npm:/c/Users/User/AppData/Local/Yarn/bin:/c/Users/User/AppData/Local/Programs/Microsoft VS Code/bin:/usr/bin/vendor_perl:/usr/bin/core_perl"
+            },
+            "args": [
+                "server",
+                "-p",
+                "3000"
+            ]
+        }
     ]
 }

@@ -8,7 +8,19 @@ gem "bootstrap"
 gem 'jquery-rails'
 gem 'sprockets-rails'
 gem "jquery-ui-rails"
+
+#cocoon for inline editing
 gem "cocoon"
+
+#font-awesome icons
+gem "font-awesome-rails"
+
+#Debug 
+gem 'ruby-debug-ide'
+
+#Debase
+gem 'debase'
+
 
 gem 'best_in_place'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -57,6 +69,12 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Use PostgreSQL as database
   gem 'pg'
+
+  #Debug 
+  gem 'ruby-debug-ide'
+
+  #Debase
+  gem 'debase'
 end
 
 group :test do
@@ -69,6 +87,11 @@ group :test do
 
   # Postgres
   gem 'pg'
+  #Debug 
+gem 'ruby-debug-ide'
+
+#Debase
+gem 'debase'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

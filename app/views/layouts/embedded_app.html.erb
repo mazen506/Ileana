@@ -14,16 +14,33 @@
 
     <script>
         jQuery(function($) {
+          //     alert('Hii');
+          //      $('#txt_search').on('input',function (value) { 
+          //        console.log('1');
+          //        var search_txt = this.value.toLowerCase();
+          //        if (search_txt == '')
+          //           $(".product-list-item label").parent().css("display","block");
+          //        else
+          //           $(".product-list-item label").parent().css("display","none");
+                 
+          //        $( "label" )
+          //       .filter(function( index ) {
+          //           return $(this).text().toLowerCase().indexOf(search_txt) > -1 ;
+          //       })
+          //          .parent().css( "display", "block" );
+          // });
+
             $(".ajax")
                 .bind("ajax:loading", console.log('loading'))
                 .bind("ajax:complete", console.log('complete'))
                 .bind("ajax:success", function(event, data, status, xhr) {
-                    alert('Success !!')
+                    alert('Success !!');
                 })
                 .bind("ajax:failure", function(xhr, status, error) {
                     console.log(error);
                 });
-        });
+        }); 
+   
     </script>
   </head>
 
@@ -35,7 +52,9 @@
           <% flash.each do |key, value| %>
             <div class="alert alert-<%= key %>"><%= value %></div>
           <% end %>
+          <div id='forms-container'>
           <%= yield %>
+          </div>
           <%= render 'layouts/footer' %>
         </main>
       </div>
