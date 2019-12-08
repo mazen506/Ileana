@@ -5,7 +5,7 @@ ShopifyApp.configure do |config|
     config.application_name = "ILEANA"
     config.api_key = "9d8bf20b85084b028404278cfa8b59f3"
     config.secret = "0111b57df967fef0a14fa1bc3f602b17"
-		config.scope = "read_products, write_products, read_orders,read_all_orders, write_orders, read_customers, read_themes, write_themes, read_gift_cards, write_gift_cards"
+		config.scope = "read_products, write_products, read_orders, write_orders, read_customers, read_themes, write_themes, read_gift_cards, write_gift_cards"
 		config.api_version = "2019-10"
 		config.embedded_app = true
 		config.after_authenticate_job = false
