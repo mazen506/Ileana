@@ -175,3 +175,33 @@ only screen and (max-width: 760px),
     white-space: nowrap;
   }
 }
+
+#spinner {
+  background: none repeat scroll 0 0 black;
+  position: fixed;
+  display: block;
+  opacity: 0.5;
+  z-index: 1000001; // or, higher
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.spinner-circle {
+  position: absolute;
+  left:50%;
+  top:50%;
+}
+
+
+// @-webkit-keyframes spin {
+// from {-webkit-transform:rotate(0deg);}
+// to {-webkit-transform:rotate(360deg);}
+// }
+
+// @keyframes spin {
+// from {transform:rotate(0deg);}
+// to {transform:rotate(360deg);}
+// }
+

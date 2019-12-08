@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   #
 
   resources :charts
-
+  get 'charts/list_products/:filter/:id' => 'charts#list_products', :as => :list_products
 end

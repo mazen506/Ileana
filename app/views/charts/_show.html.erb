@@ -1,0 +1,92 @@
+    <div class="row">
+    <div class="col">
+
+  <div class="row">
+    <div class="col-6">
+
+      <div class="card">
+        <h5 class="card-header">Chart</h5>
+        <div class="card-body">
+           <div class="row">
+              <div class="col">
+                  <label>Chart Name</label>
+                  <div>
+                          <%= @chart.name %>
+                  </div>
+              </div>
+              <div class="col">
+                <label>Show link to chart in product page</label>
+                <div class="custom-control custom-switch">
+                  <%= check_box_tag 'is_show_product_page', @chart.is_show_product_page,@chart.is_show_product_page, options = { class: 'custom-control-input', :id => 'customSwitch1' } %>
+                  <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                </div>
+              </div>
+           </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h5 class="card-header">Chart</h5>
+        <div class="card-body">
+          <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Row</th>
+                <th scope="col"><%= @chart.col_1_caption %></th>
+                <th scope="col"><%= @chart.col_2_caption %></th>
+                <th scope="col"><%= @chart.col_3_caption %></th>
+              </tr>
+            </thead>
+            <tbody class="chart_details">
+                <% @chart.chart_details.each do |c| %>
+                    <tr>
+                        <td><%= c.row_name %></td>
+                        <td><%= c.col1 %></td>
+                        <td><%= c.col2 %></td>                                                
+                        <td><%= c.col3 %></td>                        
+                    </tr>
+                <% end %>
+            </tbody>
+
+         </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-6">
+
+      <div class="card product-list">
+        <h5 class="card-header">
+              Products
+        </h5>
+
+        <div class="card-body">
+          <% if (@chart_products != nil) %>
+            <% @chart_products.each do |product| %>
+              <div class="form-group row product-list-item">
+                <div class="col-3">
+                    <img src="<%= product.image.src %>" class="mb-2">
+                </div>
+                <div class="col-6">
+                    <%= label_tag dom_id(product), product.title %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+    </div>
+
+  </div>
+  </div>
+
+
+    <div class="row float-right btns-row">
+      <div class="form-group">
+        <%= link_to 'Edit', edit_chart_path(@chart), class:'btn btn-primary' %>
+        <%= link_to 'Back', charts_path, class:'btn btn-primary' %>
+      </div>
+    </div>

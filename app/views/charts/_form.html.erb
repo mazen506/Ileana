@@ -1,22 +1,23 @@
   <script>
-  jQuery(function($) {
-               $('#txt_search').on('input',function (value) { 
-                 console.log('1');
-                 var search_txt = this.value.toLowerCase();
-                 if (search_txt == '')
-                    $(".product-list-item label").parent().css("display","block");
-                 else
-                    $(".product-list-item label").parent().css("display","none");
-                 
-                 $( "label" )
-                .filter(function( index ) {
-                    return $(this).text().toLowerCase().indexOf(search_txt) > -1 ;
-                })
-                   .parent().css( "display", "block" );
-          });
-  })
+
+
+    $(function() {
+       $('#spinner').hide();
+       $("#forms-container").on("ajax:send", function(){
+                $('#spinner').show();
+           }
+       );
+
+       $("#forms-container").on("ajax:complete", function(){
+                $('#spinner').hide();
+           }
+        );
+     
+
+    });
+  
   </script>
-  <%= form_with model: @chart, :local => true do  |f| %>
+  <%= form_with model: @chart, :id=> 'frm' ,:remote => true do  |f| %>
   <div class="row">
     <div class="col">
 
@@ -38,8 +39,6 @@
   </div>
 
   <div class="row">
-
-
     <div class="col-6">
       <div class="card">
         <h5 class="card-header">Chart</h5>
@@ -97,44 +96,14 @@
         <div class="card-header">
               <h5>Products</h5>
               <h6 class="header-links">
-              
-                  <%= link_to image_tag("icon_all.png", border: 0), url_for(:filter => 'all') %> 
-                  <%= link_to image_tag("icon_selected.png", border: 0), url_for(:filter => 'selected') %> 
-              
+                  <%= link_to image_tag("icon_all.png", border: 0),list_products_path(filter: "all",id:  @chart.id),class: "list_all_products", remote: true %> 
+                  <%= link_to image_tag("icon_selected.png", border: 0),list_products_path(filter: "selected", id: @chart.id),remote: true %> 
               </h6>
           </div>
 
-        <div class="card-body">
-          <% if (params[:filter] == 'all' || params[:filter] == nil ) %>
-            <% if (@products != nil) %>
-              <div class="form-group has-search product-list-item">
-                  <span class="fa fa-search form-control-feedback"></span>
-                  <input type="text" class="form-control" placeholder="Search" id='txt_search'>
-            </div>
-            <% @products.each do |product| %>
-              <div class="custom-control custom-checkbox product-list-item">
-                    <%= check_box_tag "chart_product[]", product.id, @product_ids.include?(product.id.to_s), id: dom_id(product), class: "custom-control-input" %>
-                    <label class="custom-control-label" for=<%= dom_id(product) %>>
-                            <img src="<%= product.image.src %>">
-                            <%= product.title %>
-                    </label>
-              </div>
-            <% end %>
-           <% end %>
-          <% else %>
-          <% if (@selected_products != nil) %>
-            <% @selected_products.each do |product| %>
-              <div class="custom-control custom-checkbox product-list-item">
-                    <%= check_box_tag "chart_product[]", product.id, @product_ids.include?(product.id.to_s), id: dom_id(product), class: "custom-control-input" %>
-                    <label class="custom-control-label" for=<%= dom_id(product) %>>
-                            <img src="<%= product.image.src %>">
-                            <%= product.title %>
-                    </label>
-              </div>
-            <% end %>
-          <% end %>
-       <% end %>
-      </div>
+        <div class="card-body product-list-panel">
+            <%= render 'list_products'%>
+        </div>
     </div>
 
 
@@ -144,7 +113,13 @@
 
     <div class="row float-right btns-row">
       <div class="form-group">
-        <%= f.submit "Save",local: true, class: 'btn btn-primary ajax' %>
+
+        <div id="spinner">
+            <div class="spinner-border spinner-circle" role="status">
+            </div>
+        </div>
+
+        <%= f.submit "Save",remote: true, class: 'btn btn-primary ajax' %>
         <%= link_to 'Back', charts_path, class:'btn btn-primary' %>
       </div>
     </div>
