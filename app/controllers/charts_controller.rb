@@ -105,7 +105,7 @@ class ChartsController < AuthenticatedController
     @products = ShopifyAPI::Product.find(:all)
     @product_ids = Array.new
     @selected_products = Array.new
-    if (!chart_id.empty? && !chart_id.nil?)
+    if (!chart_id.nil?)
         #Get Product Ids
         @product_ids = ChartProduct.where(chart_id: chart_id).select(:product_id).map{|p| p.product_id}
         

@@ -91,8 +91,8 @@
         <div class="card-header">
               <h5>Products</h5>
               <h6 class="header-links">
-                  <%= link_to image_tag("icon_all.png", border: 0),list_products_path(filter: "all",id:  @chart.id),class: "list_all_products", remote: true %> 
-                  <%= link_to image_tag("icon_selected.png", border: 0),list_products_path(filter: "selected", id: @chart.id),remote: true %> 
+                  <%= link_to image_tag("icon_all.png", border: 0),list_products_path(filter: "all",id:  @chart.id || '0'),class: "list_all_products", remote: true %> 
+                  <%= link_to image_tag("icon_selected.png", border: 0),list_products_path(filter: "selected", id: @chart.id || '0'),remote: true %> 
               </h6>
           </div>
 

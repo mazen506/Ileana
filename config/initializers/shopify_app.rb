@@ -14,8 +14,8 @@ ShopifyApp.configure do |config|
 		puts "Starting Shopify app in development mode."
 		# Development configuration
     config.application_name = "ILEANA"
-    config.api_key = "9d8bf20b85084b028404278cfa8b59f3"
-    config.secret = "0111b57df967fef0a14fa1bc3f602b17"
+    config.api_key = "3ed89899e59423f9b88428a8006cf214"
+    config.secret = "eda9ea88051993330cfcdbc57ca67482"
 		config.scope = "read_products, write_products, read_orders, write_orders, read_customers, read_themes, write_themes, read_gift_cards, write_gift_cards" 
 		config.api_version = "2019-10"
 		config.embedded_app = true
