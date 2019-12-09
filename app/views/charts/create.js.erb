@@ -1,0 +1,5 @@
+$("#app-notifications").html("");
+<% flash.each do |key, value| %>
+        $("#app-notifications").append("<div class='alert alert-<%= key %>'><%= value %></div>")
+<% end %>
+$("html, body").animate({ scrollTop: 0 }, "fast");

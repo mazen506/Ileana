@@ -16,7 +16,6 @@ class ChartsController < AuthenticatedController
   end
 
   def destroy
-
     @id = params[:id]
     @chart = Chart.find_by(:id => @id)
     ActiveRecord::Base.transaction do
@@ -53,6 +52,15 @@ class ChartsController < AuthenticatedController
 
   def create
     @chart = Chart.new(chart_params)
+
+    #Validate
+    if(!@chart.valid?)
+      # Reinitialize variables
+      setProducts(nil)
+      render 'new'
+      return 
+    end
+
     @shop = Shop.find_by(:shopify_domain => ShopifyAPI::Shop.current.domain)
     @chart_products = Array.new
     @product_ids = params[:chart_product]
@@ -77,10 +85,9 @@ class ChartsController < AuthenticatedController
       redirect_to "/charts/index"
     else
             # Reinitialize variables
-            @product_ids = Array.new # empty array
-            @products = ShopifyAPI::Product.find(:all)
+            setProducts(nil)
             # Render the new page 
-            render action: "new"
+            render "new"
     end
 
   end
@@ -206,7 +213,14 @@ end
 
 
 def update
+
     @chart = find_chart
+    @chart.assign_attributes( chart_params)
+    if(!@chart.valid?)
+        setProducts(@chart.id)
+        render 'edit'
+        return 
+    end
     @chart_products = Array.new
     @product_ids = params[:chart_product]
     @product_ids.each do |product_id|
@@ -236,13 +250,13 @@ def update
     ChartProduct.create(@chart_products)
 
      if @chart.update(chart_params)
-        flash.now[:success] = "Updated Successfully !!"
-        respond_to do |format|
-           format.js 
-        end
+        flash[:success] = "Updated Successfully!!"
+        render "update"
      else
-        render 'edit'
+        setProducts(@chart.id)
+        render "edit"
      end
+
    end # End Transation 
   end
 
