@@ -1,6 +1,4 @@
   <script>
-
-
     $(function() {
        $('#spinner').hide();
        $("#forms-container").on("ajax:send", function(){
@@ -12,15 +10,12 @@
                 $('#spinner').hide();
            }
         );
-     
-
     });
-  
   </script>
+
   <%= form_with model: @chart, :id=> 'frm' ,:remote => true do  |f| %>
   <div class="row">
     <div class="col">
-
     <% if @chart != nil %>
       <% if @chart.errors.any? %>
         <div class="alert alert-error">
@@ -39,7 +34,7 @@
   </div>
 
   <div class="row">
-    <div class="col-6">
+    <div class="col-sm-12 col-md-6">
       <div class="card">
         <h5 class="card-header">Chart</h5>
         <div class="card-body">
@@ -75,6 +70,7 @@
                 <th scope="col"></th>
               </tr>
             </thead>
+
             <tbody class="chart_details">
                 <%= f.fields_for :chart_details do |builder| %>
                     <%= render 'chart_detail_fields', :f => builder %>
@@ -88,10 +84,9 @@
           </div>
         </div>
       </div>
-
     </div>
 
-    <div class="col-6">
+    <div class="col-sm-12 col-md-6">
       <div class="card product-list">
         <div class="card-header">
               <h5>Products</h5>
@@ -105,8 +100,6 @@
             <%= render 'list_products'%>
         </div>
     </div>
-
-
   </div>
   </div>
 
@@ -121,6 +114,7 @@
 
         <%= f.submit "Save",remote: true, class: 'btn btn-primary ajax' %>
         <%= link_to 'Back', charts_path, class:'btn btn-primary' %>
+        
       </div>
     </div>
 
