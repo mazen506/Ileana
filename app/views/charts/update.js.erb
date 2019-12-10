@@ -1,5 +1,13 @@
 $("#app-notifications").html("");
-<% flash.each do |key, value| %>
-        $("#app-notifications").append("<div class='alert alert-<%= key %>'><%= value %></div>")
-<% end %>
+<% if @chart.errors.any? %>
+    $("#app-notifications").append("<div class='alert alert-error'><h6>Please resolve the following errors:</h6><ul>");
+              <% @chart.errors.full_messages.each do |msg| %>
+                        $("#app-notifications").append("<li><%= msg %></li>");
+              <% end %>
+    $("#app-notifications").append("</ul></div>");
+<% else %>
+        <% flash.each do |key, value| %>
+                $("#app-notifications").append("<div class='alert alert-<%= key %>'><%= value %></div>")
+        <% end %>
+<% end %>    
 $("html, body").animate({ scrollTop: 0 }, "fast");

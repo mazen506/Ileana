@@ -51,20 +51,28 @@ class ChartsController < AuthenticatedController
   end
 
   def create
+
+    #Initialize Params
+    @new_params = chart_params
     @chart = Chart.new(chart_params)
-
-    #Validate
-    if(!@chart.valid?)
-      # Reinitialize variables
-      setProducts(nil)
-      render 'new'
-      return 
-    end
-
-    @shop = Shop.find_by(:shopify_domain => ShopifyAPI::Shop.current.domain)
     @chart_products = Array.new
     @product_ids = params[:chart_product]
+    @product_ids.each do |product_id|
+      @chart_product = ChartProduct.new
+      @chart_product.product_id = product_id
+      @chart.chart_products.push(@chart_product)
+    end
+    @shop = Shop.find_by(:shopify_domain => ShopifyAPI::Shop.current.domain)
     @chart.shop_id = @shop.id
+    
+    #Validate Object
+    if(!@chart.valid?)
+      # Reinitialize Product list Before rendering 
+      setProducts(nil)
+      render 'new'
+      return
+    end
+
     @chart.description = ""
 
     ActiveRecord::Base.transaction do
@@ -76,11 +84,10 @@ class ChartsController < AuthenticatedController
     updateProductsDescription
 
     if @chart.save
-      #Add New Product
-      @product_ids.each do |product_id|
-        @chart_products.push({:chart_id => @chart.id, :product_id => product_id})
-      end
-      ChartProduct.create(@chart_products)
+      # @product_ids.each do |product_id|
+      #   @chart_products.push({:chart_id => @chart.id, :product_id => product_id})
+      # end
+      # ChartProduct.create(@chart_products)
       flash[:success] = "Added Successfully !!"
       redirect_to "/charts/index"
     else
@@ -214,18 +221,25 @@ end
 
 def update
 
+    #Initialize
     @chart = find_chart
     @chart.assign_attributes( chart_params)
+    @chart_products = Array.new
+    @product_ids = params[:chart_product]
+    @chart.chart_products.destroy_all
+    Array(@product_ids).each do |product_id|
+        @chart_product = ChartProduct.new
+        @chart_product.product_id = product_id
+        @chart.chart_products.push(@chart_product)
+    end
+
+
     if(!@chart.valid?)
         setProducts(@chart.id)
         render 'edit'
-        return 
+        return
     end
-    @chart_products = Array.new
-    @product_ids = params[:chart_product]
-    @product_ids.each do |product_id|
-        @chart_products.push({:chart_id => @chart.id, :product_id => product_id})
-    end
+
 
     ActiveRecord::Base.transaction do
       #Begin Transaction
@@ -246,8 +260,8 @@ def update
     updateProductsDescription
 
     #Update ChartProducts Table
-    ChartProduct.where(chart_id: @chart.id).destroy_all
-    ChartProduct.create(@chart_products)
+    # ChartProduct.where(chart_id: @chart.id).destroy_all
+    # ChartProduct.create(@chart_products)
 
      if @chart.update(chart_params)
         flash[:success] = "Updated Successfully!!"

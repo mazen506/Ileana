@@ -14,24 +14,6 @@
   </script>
 
   <%= form_with model: @chart, :id=> 'frm' ,:remote => true do  |f| %>
-  <div class="row">
-    <div class="col">
-    <% if @chart != nil %>
-      <% if @chart.errors.any? %>
-        <div class="alert alert-error">
-          <h6>
-              Please resolve the following errors:
-          </h6>
-          <ul>
-              <% @chart.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-          </ul>
-        </div>
-      <% end %>
-    <% end %>
-   </div>
-  </div>
 
   <div class="row">
     <div class="col-sm-12 col-md-6">
