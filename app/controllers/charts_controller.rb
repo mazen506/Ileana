@@ -57,7 +57,7 @@ class ChartsController < AuthenticatedController
     @chart = Chart.new(chart_params)
     @chart_products = Array.new
     @product_ids = params[:chart_product]
-    @product_ids.each do |product_id|
+    Array(@product_ids).each do |product_id|
       @chart_product = ChartProduct.new
       @chart_product.product_id = product_id
       @chart.chart_products.push(@chart_product)
