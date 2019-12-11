@@ -1,3 +1,9 @@
-$('.delete_chart').bind('ajax:success', function() {     
-  $(this).closest('.chart-list-item').fadeOut();
+$("#app-notifications").html("");
+
+<% flash.each do |key, value| %>
+      $("#app-notifications").append("<div class='alert alert-<%= key %>'><%= value %></div>")
+<% end %>
+
+$('.delete_chart').bind('ajax:success', function() {
+      $(this).closest('.chart-list-item').fadeOut();
 });

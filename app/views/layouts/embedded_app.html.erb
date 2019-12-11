@@ -13,34 +13,26 @@
     <% end %>
     <%= csrf_meta_tags %>
 
-    <script>
- 
- 
+
+     <script>
+
+    $(window).load(function() {
+    //   // $('#spinner').hide();
+    //    $("#forms-container").bind("ajax:before", function(){
+    //       alert('Before');
+    //    }).bind("ajax:success", function(){
+    //       $('#spinner').hide();
+    //    }).bind("ajax:error", function(){
+    //       alert('Error');
+    //    }).bind("ajax:complete", function(){
+    //       //alert('Completed..');
+    //       $('#spinner').hide();
+    // })
+    });
 
 
- jQuery(function($) {
-  //     $(".spinner").hide();
-  //  $('.spinner').ajaxStart(function() {
-  //    alert('start ..');
-  //   $(this).show();
-  // }).ajaxComplete(function() {
-  //   $(this).hide();
-  // });
 
- });
-
-  //       jQuery(function($) {
-  // $(".spinner").hide();
-  // $('form').submit(function() {
-  //   $(".spinner").show();
-  // }).ajaxComplete(function() {
-  //     var $loading = $(".spinner");
-  //     setTimeout(function(){
-  //         $loading.hide();
-  //     },1000); //Timeout so you can see the loading happen
-  // });
-
-    </script>
+     </script>
   </head>
 
   <body>
@@ -56,6 +48,10 @@
           <div id='forms-container'>
           
           <%= yield %>
+                  <div id="spinner" style='display:none'>
+                    <div class="spinner-border spinner-circle" role="status">
+                    </div>
+                  </div>
           </div>
           <%= render 'layouts/footer' %>
         </main>

@@ -27,9 +27,9 @@ class ChartsController < AuthenticatedController
     @chart.destroy
 
     respond_to do |format|
-      format.html {redirect_to '/charts/index',:notice => "Your chart has been deleted !" }
+      format.html { redirect_to '/charts/index', :notice => "Your chart has been deleted !" }
       format.json { head :no_content }
-      format.js   { render :layout => false }
+      format.js   { flash[:notice] = 'Chart Deleted Successfully..'  }
     end
 
     end

@@ -1,17 +1,18 @@
   <script>
-    $(function() {
-       $('#spinner').hide();
-       $("#forms-container").on("ajax:send", function(){
-                $('#spinner').show();
-           }
-       );
+  $(function() {
 
-       $("#forms-container").on("ajax:complete", function(){
-                $('#spinner').hide();
-           }
-        );
-    });
-  </script>
+    $("#forms-container").on("ajax:send", function(){
+             $('#spinner').show();
+        }
+    );
+
+    $("#forms-container").on("ajax:complete", function(){
+             $('#spinner').hide();
+        }
+     );
+
+    }); 
+ </script>
 
   <%= form_with model: @chart, :id=> 'frm' ,:remote => true do  |f| %>
 
@@ -89,10 +90,7 @@
     <div class="row float-right btns-row">
       <div class="form-group">
 
-        <div id="spinner">
-            <div class="spinner-border spinner-circle" role="status">
-            </div>
-        </div>
+
 
         <%= f.submit "Save",remote: true, class: 'btn btn-primary ajax' %>
         <%= link_to 'Back', charts_path, class:'btn btn-primary' %>

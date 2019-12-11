@@ -74,6 +74,17 @@ product-list-item label {
   border-color: #f5c6cb;
 }
 
+.has-search {
+  position: static;
+}
+
+
+.alert-notice {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
 .product-list-item .custom-control-label::after, .product-list-item .custom-control-label::before {
   margin-top: 15px;
 }
