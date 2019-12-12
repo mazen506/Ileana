@@ -1,7 +1,7 @@
 <tr class="nested-fields">
-  <td><%= f.text_field :row_name, class: 'form-control' %></td>
-  <td><%= f.text_field :col1, class: 'form-control' %></td>
-  <td><%= f.text_field :col2, class: 'form-control' %></td>
-  <td><%= f.text_field :col3, class: 'form-control' %></td>
+  <td><%= f.text_field :row_name, class: 'form-control fields_row_name', :placeholder => "Row Name" %></td>
+  <td><%= f.text_field :col1, class: 'form-control fields_col' %></td>
+  <td><%= f.text_field :col2, class: 'form-control fields_col' %></td>
+  <td><%= f.text_field :col3, class: 'form-control fields_col' %></td>
   <td><%= link_to_remove_association "Delete", f %></td>
 </tr>

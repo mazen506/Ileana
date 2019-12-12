@@ -15,10 +15,14 @@ class ChartsController < AuthenticatedController
     @selected_products = @products.select{ |p| @product_ids.include?(p.id.to_s) }
   end
 
+
   def destroy
     @id = params[:id]
     @chart = Chart.find_by(:id => @id)
     ActiveRecord::Base.transaction do
+
+    #Cache Old Products & Remove Product Description
+    @old_product_ids = ChartProduct.where(chart_id: @chart.id).select(:product_id).map{|p| p.product_id}
 
     #Clear Products Description
     clearProductsDescription
@@ -34,6 +38,7 @@ class ChartsController < AuthenticatedController
 
     end
     # redirect_to '/charts/index',:notice => "Your chart has been deleted !"
+
   end
 
 
@@ -192,9 +197,8 @@ def updateProductsDescription
 end
 
 def clearProductsDescription
-     #Get Removed Products & Remove Product Description
-     @old_product_ids = ChartProduct.where(chart_id: @chart.id).select(:product_id).map{|p| p.product_id}
      if (!(@old_product_ids.nil? || @old_product_ids.empty?))
+
        if (@product_ids.nil?) #Delete
           @removed_product_ids = @old_product_ids
        else
@@ -203,7 +207,7 @@ def clearProductsDescription
 
        if (!(@removed_product_ids.nil? || @removed_product_ids.empty?))
           @removed_product_ids.each do |product_id|
-            @product = ShopifyAPI::Product.find(product_id) 
+            @product = ShopifyAPI::Product.find(product_id)
             if (@product != nil)
                 @body_html = @product.body_html
                 @script_pos = @body_html.index('<!-- StartIleanaApp -->')
@@ -221,19 +225,24 @@ end
 
 def update
 
-    #Initialize
+    ###Initialize
     @chart = find_chart
     @chart.assign_attributes( chart_params)
     @chart_products = Array.new
     @product_ids = params[:chart_product]
+
+    #Cache Old Products & Remove Product Description
+    @old_product_ids = ChartProduct.where(chart_id: @chart.id).select(:product_id).map{|p| p.product_id}
+
     @chart.chart_products.destroy_all
     Array(@product_ids).each do |product_id|
         @chart_product = ChartProduct.new
         @chart_product.product_id = product_id
         @chart.chart_products.push(@chart_product)
     end
+    ####
 
-
+    ###Validate
     if(!@chart.valid?)
         setProducts(@chart.id)
         render 'edit'

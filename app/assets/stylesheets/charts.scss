@@ -24,6 +24,7 @@
     overflow:hidden;
 }
 
+
 .product-list .card-body {
   /* overflow: hidden; */
     overflow-y: auto;
@@ -75,7 +76,7 @@ product-list-item label {
 }
 
 .has-search {
-  position: static;
+  position: relative;
 }
 
 
@@ -95,6 +96,19 @@ label.custom-control-label img {
   /* padding-right: 30px; */
 }
 
+.fields_row_name {
+  font-size: 13px !important;
+  background-color: paleturquoise !important;
+}
+
+.col_row_name{
+  width:30%;
+}
+
+.fields_col {
+  font-size: 13px !important;
+}
+
 .chart-list .card-body {
   /* overflow: hidden; */
   overflow-y: auto;
@@ -106,7 +120,7 @@ label.custom-control-label img {
   padding-top:10px;
 }
 
-.cahrt-list ,card-record-title a {
+.chart-list ,card-record-title a {
   color:#000;
 }
 
